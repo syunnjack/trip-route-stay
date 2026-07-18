@@ -8,7 +8,7 @@ Recommended repository name: `trip-route-stay`
 
 ## Domain candidates
 
-First candidate: `triproutestay.jp`
+Confirmed domain: `triproutestay.jp`
 
 Other candidates:
 
