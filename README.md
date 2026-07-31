@@ -8,7 +8,7 @@ Recommended repository name: `trip-route-stay`
 
 ## Domain candidates
 
-Confirmed domain: `triproutestay.jp`
+Confirmed domain: `https://syunnjack.github.io/trip-route-stay/`
 
 Other candidates:
 
