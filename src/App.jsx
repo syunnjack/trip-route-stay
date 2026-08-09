@@ -60,11 +60,11 @@ const routes = [
 ]
 
 const techStack = [
-  ['Frontend', 'Vite + React 19. Static first, fast build, easy GitHub Pages deployment.'],
-  ['Data', 'Phase 1 uses local JSON seed data and localStorage UGC. Phase 2 can move to Supabase or Cloudflare D1.'],
-  ['SEO/AIO/LLMO', 'Route pages, FAQ blocks, structured data, llms.txt, sitemap, and answer-first copy.'],
-  ['Revenue', 'Hotel affiliate, bus affiliate, local listing ads, coupon leads, sponsored route pages, LINE alerts.'],
-  ['Growth', 'UGC reports, destination pages, route pages, event pages, X share cards, LINE reminder flows.'],
+  ['画面構成', 'Vite + React 19。静的MVPとして軽く、GitHub Pagesへ展開しやすい構成です。'],
+  ['データ基盤', 'フェーズ1は静的サンプルデータ + localStorageのUGC。フェーズ2でSupabaseまたはCloudflare D1へ移行します。'],
+  ['SEO/AIO/LLMO', 'ルートページ、FAQブロック、構造化データ、llms.txt、サイトマップ、結論ファーストの文章構成で最適化します。'],
+  ['収益ルート', 'ホテルアフィリエイト、バスアフィリエイト、地域店舗の掲載広告、クーポン送客、スポンサールートページ、LINE通知。'],
+  ['成長施策', 'UGCレポート、到着地ページ、ルートページ、イベントページ、Xシェアカード、LINEリマインド通知。'],
 ]
 
 const faqs = [
@@ -113,12 +113,12 @@ function App() {
     <main className="app-shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">Priority 1 / travel x stay x local spots</p>
-          <h1>Trip Route Stay</h1>
+          <p className="eyebrow">遠征・宿泊・周辺スポット導線ナビ</p>
+          <h1>遠征ルート宿泊ナビ</h1>
           <p className="lead">高速バス・電車・遠征ルートの到着地から、宿泊、喫煙可、バストイレ付き、深夜営業、漫画喫茶、周辺スポットへつなぐ収益導線型ナビです。</p>
         </div>
         <aside className="hero-panel">
-          <span>AI answer block</span>
+          <span>triproutestay.jp</span>
           <strong>到着地検索の直後に、泊まる・休む・食べるを提示する。</strong>
           <p>予約アフィリエイトと地域店舗の掲載課金を同時に狙えるため、PDF内アイデアの中でも最優先で深掘りします。</p>
         </aside>
@@ -132,9 +132,9 @@ function App() {
       </section>
 
       <section className="metrics">
-        <article><span>Route seeds</span><strong>{routes.length}</strong></article>
-        <article><span>Saved leads</span><strong>{saved.length}</strong></article>
-        <article><span>UGC reports</span><strong>{posts.length}</strong></article>
+        <article><span>ルートサンプル数</span><strong>{routes.length}</strong></article>
+        <article><span>保存数</span><strong>{saved.length}</strong></article>
+        <article><span>投稿数</span><strong>{posts.length}</strong></article>
       </section>
 
       <section className="route-grid">
