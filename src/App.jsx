@@ -4,73 +4,74 @@ import './App.css'
 const saveKey = 'trip-route-stay.saved'
 const postKey = 'trip-route-stay.posts'
 
+// 掲載しているのは表示例。実際の空室や営業状況とは連動していないため、
+// 読者が実データと誤解しないよう、画面上でも「表示例」と明示する。
 const routes = [
   {
     id: 'nagoya-shizuoka',
-    title: '名古屋から静岡へ行く高速バス遠征',
+    title: '名古屋から静岡へ高速バスで行く（表示例）',
     origin: '名古屋',
     destination: '静岡',
-    intent: '到着後すぐ泊まる',
+    intent: '着いたらすぐ寝たい',
     price: '2,400円台から',
-    arrival: '22:40以降',
+    arrival: '22:40以降に到着',
     score: 94,
     tags: ['高速バス', '喫煙可ホテル', '深夜チェックイン', '駅近'],
-    spots: ['静岡駅前ホテル', '深夜営業の飲食店', 'シャワー付き漫画喫茶'],
-    revenue: 'ホテル予約アフィリエイト + 深夜飲食店送客',
+    spots: ['静岡駅前のホテル', '深夜まで開いている飲食店', 'シャワーが使える漫画喫茶'],
+    note: '到着が遅いので、深夜でもチェックインできる宿を先に押さえておくと安心です。',
   },
   {
     id: 'tokyo-nagoya-live',
-    title: '東京から名古屋ライブ遠征',
+    title: '東京から名古屋へライブ遠征（表示例）',
     origin: '東京',
     destination: '名古屋',
-    intent: '終演後に休む',
+    intent: '終演後に休みたい',
     price: '3,000円台から',
     arrival: 'ライブ終演後',
     score: 91,
     tags: ['ライブ遠征', 'バストイレ付き', '女性向け', '終電後'],
-    spots: ['会場周辺ホテル', '栄の深夜カフェ', '名駅バス停'],
-    revenue: '宿泊予約 + 周辺スポット掲載課金',
+    spots: ['会場から歩けるホテル', '栄の深夜カフェ', '名古屋駅のバス停'],
+    note: '終演後は周辺の宿が埋まりやすいので、会場から少し離れた駅も候補に入れておくと選びやすくなります。',
   },
   {
     id: 'osaka-tokyo-morning',
-    title: '大阪から東京へ早朝到着',
+    title: '大阪から東京へ早朝に着く（表示例）',
     origin: '大阪',
     destination: '東京',
-    intent: '朝まで時間をつぶす',
+    intent: '朝まで時間をつぶしたい',
     price: '3,500円台から',
-    arrival: '05:30前後',
+    arrival: '05:30前後に到着',
     score: 88,
     tags: ['早朝到着', '朝風呂', '荷物預かり', '漫画喫茶'],
-    spots: ['朝風呂施設', '荷物預かりロッカー', '始発までの休憩所'],
-    revenue: '休憩施設送客 + コインロッカー広告',
+    spots: ['朝から入れる風呂', '荷物を預けられる場所', '始発まで休める場所'],
+    note: '早朝は店が開いていません。風呂と荷物置き場を決めておくと、始発までの数時間が楽になります。',
   },
   {
     id: 'nagoya-rccourse',
-    title: '名古屋発ラジコン・レトロスポット遠征',
+    title: '名古屋から趣味のスポットを回る（表示例）',
     origin: '名古屋',
     destination: '関東',
-    intent: '趣味スポットを回る',
-    price: '週末パック向け',
-    arrival: '土曜午前',
+    intent: '目的の場所を回りたい',
+    price: '週末の泊まりがけ向け',
+    arrival: '土曜の午前に到着',
     score: 86,
     tags: ['趣味遠征', 'レトロゲーム', 'RCコース', '周辺宿'],
-    spots: ['RCサーキット', 'レトロゲーム店', '安い宿'],
-    revenue: '趣味施設送客 + 物販/宿泊アフィリエイト',
+    spots: ['RCサーキット', 'レトロゲームの店', '安く泊まれる宿'],
+    note: '目的の場所が郊外にあることが多いので、帰りの移動時間から逆算して宿を選ぶと動きやすくなります。',
   },
 ]
 
-const techStack = [
-  ['画面構成', 'Vite + React 19。静的MVPとして軽く、GitHub Pagesへ展開しやすい構成です。'],
-  ['データ基盤', 'フェーズ1は静的サンプルデータ + localStorageのUGC。フェーズ2でSupabaseまたはCloudflare D1へ移行します。'],
-  ['SEO/AIO/LLMO', 'ルートページ、FAQブロック、構造化データ、llms.txt、サイトマップ、結論ファーストの文章構成で最適化します。'],
-  ['収益ルート', 'ホテルアフィリエイト、バスアフィリエイト、地域店舗の掲載広告、クーポン送客、スポンサールートページ、LINE通知。'],
-  ['成長施策', 'UGCレポート、到着地ページ、ルートページ、イベントページ、Xシェアカード、LINEリマインド通知。'],
+const guides = [
+  ['到着が遅いとき', '深夜チェックインに対応しているか、フロントが何時までかを予約前に確認します。到着が読めないときは、当日キャンセルの条件も見ておきます。'],
+  ['始発まで待つとき', '漫画喫茶、サウナ、24時間営業の店が候補になります。荷物が大きい場合は、コインロッカーの空きが朝まで残っているかが分かれ目です。'],
+  ['条件で選ぶとき', '喫煙可、バストイレ付き、女性専用フロアなど、譲れない条件から先に絞ると早く決まります。'],
+  ['いまの状態', 'このページで表示しているのは例です。実際の空室状況や営業時間は、各予約サイトと店舗の公式情報でご確認ください。'],
 ]
 
 const faqs = [
-  ['どんな人向けですか？', '高速バス、ライブ、スポーツ、ゲーム、ダーツ、レトロスポットなどの遠征で、到着後の宿や休憩場所を探す人向けです。'],
-  ['収益化の中心は何ですか？', '宿泊予約、バス予約、漫画喫茶や飲食店への送客、掲載課金、LINE通知の有料化です。'],
-  ['なぜSEOに強いですか？', '出発地、到着地、到着時間、目的、条件を組み合わせたロングテール検索ページを量産できるからです。'],
+  ['どんな人向けですか？', '高速バスや電車での遠征で、着いたあとに泊まる場所や休む場所を探す方に向けています。ライブ、スポーツ観戦、趣味のスポット巡りなど、目的は問いません。'],
+  ['深夜に着いても泊まれますか？', '深夜チェックインに対応した宿を選べば泊まれます。対応時間は宿ごとに違うので、予約前の確認をおすすめします。'],
+  ['ここに載っている情報は最新ですか？', '表示しているのは例です。料金や到着時間は目安として載せています。予約の前に、各サービスの公式情報をご確認ください。'],
 ]
 
 function readArray(key) {
@@ -113,28 +114,28 @@ function App() {
     <main className="app-shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">遠征・宿泊・周辺スポット導線ナビ</p>
+          <p className="eyebrow">遠征したあとの、泊まる・休む・食べる</p>
           <h1>遠征ルート宿泊ナビ</h1>
-          <p className="lead">高速バス・電車・遠征ルートの到着地から、宿泊、喫煙可、バストイレ付き、深夜営業、漫画喫茶、周辺スポットへつなぐ収益導線型ナビです。</p>
+          <p className="lead">高速バスや電車で遠征したとき、到着地から泊まる場所と休む場所を探せます。喫煙可、バストイレ付き、深夜チェックイン、朝風呂、漫画喫茶など、条件から絞り込めます。</p>
         </div>
         <aside className="hero-panel">
           <span>triproutestay.jp</span>
-          <strong>到着地検索の直後に、泊まる・休む・食べるを提示する。</strong>
-          <p>予約アフィリエイトと地域店舗の掲載課金を同時に狙えるため、PDF内アイデアの中でも最優先で深掘りします。</p>
+          <strong>着いてから探すと、もう埋まっている。</strong>
+          <p>到着時間と目的から、先に押さえておく場所を決められます。いまは表示例を公開している段階です。</p>
         </aside>
       </section>
 
       <section className="controls" aria-label="検索条件">
-        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="出発地・到着地・条件で検索" />
+        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="出発地・到着地・条件で探す" />
         <select value={filter} onChange={(event) => setFilter(event.target.value)}>
           {filters.map((item) => <option key={item}>{item}</option>)}
         </select>
       </section>
 
       <section className="metrics">
-        <article><span>ルートサンプル数</span><strong>{routes.length}</strong></article>
-        <article><span>保存数</span><strong>{saved.length}</strong></article>
-        <article><span>投稿数</span><strong>{posts.length}</strong></article>
+        <article><span>掲載中の例</span><strong>{routes.length}</strong></article>
+        <article><span>保存した数</span><strong>{saved.length}</strong></article>
+        <article><span>投稿した数</span><strong>{posts.length}</strong></article>
       </section>
 
       <section className="route-grid">
@@ -150,44 +151,44 @@ function App() {
             <div className="spot-list">
               {route.spots.map((spot) => <span key={spot}>{spot}</span>)}
             </div>
-            <p className="revenue">収益導線: {route.revenue}</p>
-            <button type="button" onClick={() => toggleSave(route.id)}>{saved.includes(route.id) ? '保存済み' : '送客候補に保存'}</button>
+            <p className="revenue">{route.note}</p>
+            <button type="button" onClick={() => toggleSave(route.id)}>{saved.includes(route.id) ? '保存済み' : 'あとで見るために保存'}</button>
           </article>
         ))}
       </section>
 
       <section className="split">
         <div className="panel">
-          <h2>技術選定</h2>
-          {techStack.map(([label, body]) => <article key={label}><b>{label}</b><p>{body}</p></article>)}
+          <h2>宿と休憩場所の選び方</h2>
+          {guides.map(([label, body]) => <article key={label}><b>{label}</b><p>{body}</p></article>)}
         </div>
         <div className="panel">
-          <h2>UGC投稿</h2>
-          <p>到着時間、閉店、喫煙可、風呂、荷物預かり、女性向け安心情報などをユーザー投稿で更新します。</p>
+          <h2>現地の情報を教えてください</h2>
+          <p>到着時間、閉店時間、喫煙の可否、風呂の有無、荷物を預けられる場所など、実際に行って分かったことを教えてください。投稿はこの端末にだけ保存されます。</p>
           <form className="ugc-form" onSubmit={addPost}>
-            <input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} placeholder="投稿タイトル" />
-            <input value={form.route} onChange={(event) => setForm({ ...form, route: event.target.value })} placeholder="対象ルート" />
-            <input value={form.memo} onChange={(event) => setForm({ ...form, memo: event.target.value })} placeholder="現地メモ・口コミ・訂正情報" />
-            <button>投稿</button>
+            <input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} placeholder="場所や店の名前" />
+            <input value={form.route} onChange={(event) => setForm({ ...form, route: event.target.value })} placeholder="どのルートの話か" />
+            <input value={form.memo} onChange={(event) => setForm({ ...form, memo: event.target.value })} placeholder="現地で分かったこと、変わっていたこと" />
+            <button>送る</button>
           </form>
           <div className="post-list">
-            {posts.length === 0 && <p className="empty">初期状態です。公開後は現地レポートを集めて鮮度を作ります。</p>}
+            {posts.length === 0 && <p className="empty">まだ投稿はありません。行ってみて分かったことを教えていただけると、次の人の助けになります。</p>}
             {posts.map((post) => <article key={post.id}><b>{post.title}</b><p>{post.memo}</p><small>{post.route} / {post.date}</small></article>)}
           </div>
         </div>
       </section>
 
       <section className="seo-section">
-        <h2>SEO / AIO / LLMOで狙うページ群</h2>
+        <h2>これから増やしていくもの</h2>
         <div className="seo-grid">
-          <article><b>路線ページ</b><p>名古屋から静岡 高速バス 宿、東京 早朝到着 休憩など。</p></article>
-          <article><b>条件ページ</b><p>喫煙可、バストイレ付き、深夜チェックイン、朝風呂、荷物預かり。</p></article>
-          <article><b>イベント遠征</b><p>ライブ、スポーツ、ダーツ、レトロゲーム、RCコース遠征。</p></article>
+          <article><b>ルートごとのページ</b><p>「名古屋から静岡、夜行バスで着いた日の宿」のように、出発地と到着地の組み合わせでまとめます。</p></article>
+          <article><b>条件ごとのページ</b><p>喫煙可、バストイレ付き、深夜チェックイン、朝風呂、荷物預かりなど、条件から探せるようにします。</p></article>
+          <article><b>遠征の目的別</b><p>ライブ、スポーツ観戦、ダーツ、レトロゲーム、RCコースなど、目的地に合わせた回り方をまとめます。</p></article>
         </div>
       </section>
 
       <section className="faq-section">
-        <h2>FAQ</h2>
+        <h2>よくある質問</h2>
         <div className="faq-grid">
           {faqs.map(([question, answer]) => <article key={question}><h3>{question}</h3><p>{answer}</p></article>)}
         </div>
